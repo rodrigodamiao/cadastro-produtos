@@ -1,10 +1,10 @@
-package com.example.damzik.cadastro_produtos.dto;
+package com.example.damzik.cadastro_produtos.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public class ProdutoDTO {
+public class ProdutoRequestDTO {
 
     @NotBlank(message = "O nome não pode estar em branco.")
     private String nome;
@@ -12,6 +12,14 @@ public class ProdutoDTO {
     @NotNull(message = "O preço é obrigatório.")
     @Positive(message = "O preço deve ser positivo.")
     private Double preco;
+
+    public ProdutoRequestDTO() {
+    }
+
+    public ProdutoRequestDTO(String nome, Double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
 
     public String getNome() {
         return nome;

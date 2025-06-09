@@ -1,6 +1,6 @@
 package com.example.damzik.cadastro_produtos.services;
 
-import com.example.damzik.cadastro_produtos.dto.ProdutoDTO;
+import com.example.damzik.cadastro_produtos.dto.request.ProdutoRequestDTO;
 import com.example.damzik.cadastro_produtos.entities.Produto;
 import com.example.damzik.cadastro_produtos.exceptions.ProdutoNotFoundException;
 import com.example.damzik.cadastro_produtos.repositories.ProdutoRepository;
@@ -11,41 +11,44 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-    ProdutoRepository repository;
+    ProdutoRepository produtoRepository;
 
-    public ProdutoService(ProdutoRepository repository) {
-        this.repository = repository;
+    public ProdutoService(ProdutoRepository produtoRepository) {
+
+        this.produtoRepository = produtoRepository;
     }
 
     public List<Produto> listarTodosProdutos(){
-        return repository.findAll();
+        return produtoRepository.findAll();
     }
 
     public Produto buscarProdutoPorId(Long id){
-        return repository.findById(id)
+        return produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException(id));
     }
 
-    public Produto salvarProduto(Produto produto){
-        return repository.save(produto);
+    public Produto salvarProduto(ProdutoRequestDTO produtoRequestDTO){
+        Produto produto = new Produto(produtoRequestDTO);
+
+        return produtoRepository.save(produto);
     }
 
     public Produto deleteProdutoById(Long id){
-        Produto produto = repository.findById(id)
+        Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException(id));
 
-        repository.deleteById(id);
+        produtoRepository.deleteById(id);
 
         return produto;
     }
 
-    public Produto updateProduto(Long id, ProdutoDTO dto){
-        Produto produto = repository.findById(id)
+    public Produto updateProduto(Long id, ProdutoRequestDTO produtoRequestDTO){
+        Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException(id));
 
-        produto.setNome(dto.getNome());
-        produto.setPreco(dto.getPreco());
+        produto.setNome(produtoRequestDTO.getNome());
+        produto.setPreco(produtoRequestDTO.getPreco());
 
-        return repository.save(produto);
+        return produtoRepository.save(produto);
     }
 }

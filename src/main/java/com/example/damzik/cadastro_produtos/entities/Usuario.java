@@ -1,33 +1,33 @@
 package com.example.damzik.cadastro_produtos.entities;
 
-import com.example.damzik.cadastro_produtos.dto.request.ProdutoRequestDTO;
+import com.example.damzik.cadastro_produtos.dto.request.UsuarioRequestDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Produto {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
-    private Double preco;
+    private String email;
 
-    public Produto() {
+    public Usuario() {
     }
 
-    public Produto(Long id, String nome, Double preco) {
+    public Usuario(Long id, String nome, String email) {
         this.id = id;
         this.nome = nome;
-        this.preco = preco;
+        this.email = email;
     }
 
-    public Produto(ProdutoRequestDTO produtoRequestDTO){
-        this.nome = produtoRequestDTO.getNome();
-        this.preco = produtoRequestDTO.getPreco();
+    public Usuario(UsuarioRequestDTO usuarioRequestDTO){
+        this.nome = usuarioRequestDTO.getNome();
+        this.email = usuarioRequestDTO.getEmail();
     }
 
     public Long getId() {
@@ -46,11 +46,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Double getPreco() {
-        return preco;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

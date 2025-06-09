@@ -1,5 +1,4 @@
 package com.example.damzik.cadastro_produtos.exceptions;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,6 +17,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProdutoNotFoundException.class)
     public ResponseEntity<RestErrorMessage> handleProdutoNotFound(ProdutoNotFoundException exception){
+        RestErrorMessage error = new RestErrorMessage(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(UsuarioNotFoundException.class)
+    public ResponseEntity<RestErrorMessage> handleUsuarioNotFound(UsuarioNotFoundException exception){
         RestErrorMessage error = new RestErrorMessage(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
@@ -49,5 +58,4 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(body);
     }
-
 }
