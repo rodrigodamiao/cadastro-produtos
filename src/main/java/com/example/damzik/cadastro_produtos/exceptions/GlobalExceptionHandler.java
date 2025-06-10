@@ -35,6 +35,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(PedidoNotFoundException.class)
+    public ResponseEntity<RestErrorMessage> handlePedidoNotFound(PedidoNotFoundException exception){
+        RestErrorMessage error = new RestErrorMessage(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException exception){
         List<String> errors = exception.getBindingResult()

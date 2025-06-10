@@ -1,10 +1,15 @@
 package com.example.damzik.cadastro_produtos.entities;
 
 import com.example.damzik.cadastro_produtos.dto.request.ProdutoRequestDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Produto {
@@ -15,6 +20,10 @@ public class Produto {
 
     private String nome;
     private Double preco;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "produtos")
+    private Set<Pedido> pedidos = new HashSet<>();
 
     public Produto() {
     }
@@ -52,5 +61,13 @@ public class Produto {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }

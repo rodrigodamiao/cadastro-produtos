@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -15,6 +19,9 @@ public class Usuario {
 
     private String nome;
     private String email;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Pedido> pedidos = new HashSet<>();
 
     public Usuario() {
     }
